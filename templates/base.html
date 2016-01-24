@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> {{ title }} </title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:300,700&subset=latin-ext' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}">
+    
+     {% block head %}{% endblock %}
+
+<body>
+
+<div class="container-fluid">
+    <div class="langs bold">
+        {% for _lang in ['hr', 'eng'] %}
+            <a href="{{ translate_url if _lang != lang else request.url }}" {% if _lang == lang %} class="active" {% endif %}>
+                {{ _lang }}
+            </a>
+            {% if not loop.last %} | {% endif %}  
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-sm-12">
+            <nav class="sidebar">
+                <div class="author-title bold">
+                    <a href="{{ url_for('index', lang=lang) }}">Katerina Duda</a>
+                </div>
+                <div class="author-links bold">
+                    <a href="{{ url_for('bio', lang=lang) }}" class="block">bio</a>
+                    <a href="{{ url_for('contact', lang=lang) }}" class="block">
+                        {{ 'kontakt' if lang == 'hr' else 'contact' }}
+                    </a>
+                    <a href="https://vimeo.com/user3677462" class="block">vimeo</a>
+                </div>
+
+                {% for group in sidebar.sidebar_categories.itervalues() %}
+                <div class="nav-group {{ 'first' if loop.first else 'last' }}">
+                    <div class="nav-group-title bold"> {{ group.title|upper }} </div>
+                    <ul>
+                        {% for item in group.projects %}
+                        <li {% if item.active %} class="active" {% endif %}>
+                            <a href="{{ url_for('project', path=item.path, lang=lang) }}">
+                                {{ item.title }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </nav>
+        </div>
+        <div class="col-md-9 col-sm-12">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+</div>
+
+
+{% block footer %}{% endblock %}
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59217884-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/blueimp-gallery.min.css') }}">
+{% endblock %}
+
+{% block content %}
+	
+    <h1 class="subheading project-title">
+        {{ project.title }}
+    </h1>
+    <p class="description">{{ project.description }}</p>
+
+    {{ project.html|safe }}
+
+    {% if project.audio %}
+        <audio controls class="spacer">
+            <source src="{{ url_for('static', filename='audio/%s' % project.audio) }}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    {% endif %}
+
+    <div id="img-gallery">
+        {% if project.video %}
+        <div class="embed-responsive embed-responsive-16by9 spacer">
+            <iframe src="//player.vimeo.com/video/{{ project.video }}?title=0&amp;byline=0&amp;portrait=0&amp;color=ffffff" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </div>
+        {% endif %}
+        {% if project.cover %}
+        <div class="spacer">
+            {% if '@' in project.cover %}
+                {% set title = project.cover.split('@')[1] %}
+                {% set image = project.cover.split('@')[0] %}
+            {% else %}
+                {% set title = None %}
+                {% set image = project.cover %}
+            {% endif %}
+            <a href="{{ url_for('static', filename=image) }}" {% if title %} title="{{ title }}" {% endif %} class="block">
+                <img src="{{ url_for('thumb', size='805x463', filename=image) }}" class="img-responsive">
+            </a>
+        </div>
+        {% endif %}
+        {% if project.images and project.images|length != 0 %}
+        <div class="row">
+            {% for image in project.images %}
+            <div class="col-sm-3 col-xs-4 spacer">
+                {% if '@' in image %}
+                    {% set title = image.split('@')[1] %}
+                    {% set image = image.split('@')[0] %}
+                {% else %}
+                    {% set title = None %}
+                {% endif %}
+                <a href="{{ url_for('static', filename=image) }}" {% if title %} title="{{ title }}" {% endif %} class="block">
+                    <img src="{{ url_for('thumb', size='185x134', filename=image) }}" class="img-responsive">
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+
+    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+        <div class="slides"></div>
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+    </div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/blueimp-gallery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/project-gallery.js') }}"></script>
+    
+{% endblock %}

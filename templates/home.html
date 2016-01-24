@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-11">
+		{% for page in pages if page.homepage %}
+			<div class="col-sm-4 col-xs-6 home-boxes">
+					{% if '@' in page.cover %}
+						{% set title = page.cover.split('@')[1] %}
+						{% set image = page.cover.split('@')[0] %}
+					{% else %}
+						{% set title = None %}
+						{% set image = page.cover %}
+					{% endif %}
+					<a href="{{ url_for('project', path=page.path, lang=lang) }}" class="bold block">
+						<img src="{{ url_for('thumb', size='220x220', filename=image) }}" {% if title %} title="{{ title }}" {% endif %} class="block img-responsive">
+						{{ page.title }}
+					</a>
+					<p> {{ page.description }} </p>
+			</div>
+			{% if loop.index is divisibleby 3 %}
+				<div class="clearfix visible-sm-block visible-md-block visible-lg-block hidden-xs"></div>
+			{% endif %}
+			{% if loop.index is divisibleby 2 %}
+				<div class="clearfix visible-xs-block hidden-sm hidden-md hidden-lg"></div>
+			{% endif %}
+		{% endfor %}
+		</div>
+	</div>
+{% endblock %}

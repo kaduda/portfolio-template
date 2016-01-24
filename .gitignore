@@ -1,0 +1,4 @@
+*.pyc
+static/*
+!static/js
+!static/css
