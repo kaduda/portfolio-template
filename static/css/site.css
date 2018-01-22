@@ -38,6 +38,7 @@ h1 { margin: 0 0 5px 0; font-size: 20px; }
 
 /* project */
 .project .decription { color: #515151; }
+.project > p > img { display: block; margin: 0 auto; }
 
 /* home */
 .home-boxes img { margin-bottom: 10px; }
