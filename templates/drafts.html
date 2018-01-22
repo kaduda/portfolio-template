@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="row">
+		{% for draft in drafts %}
+		<div class="col-md-11">
+			{{ draft.title }}
+			{{ draft.html|safe }}
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}

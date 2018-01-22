@@ -1,11 +1,11 @@
+/* base stuff */
 html { height: 100%; }
-body { font-family: 'Roboto Slab', serif; min-height: 100%; overflow-y: scroll; }
+body { font-family: 'Roboto', sans-serif; min-height: 100%; overflow-y: scroll; }
 
 body { padding: 40px 20px 60px 20px; }
-h1, h2, h3, h4, h5, h6,
-p.description { font-weight: 700; color: #515151; }
+h1, h2, h3, h4, h5, h6 { font-weight: 700; color: #515151; }
 
-p { line-height: 22px; margin-bottom: 22px; text-align: justify; font-size: 13px; }
+p { line-height: 22px; margin-bottom: 22px; text-align: left; font-size: 13px; }
 .spacer { margin-bottom: 22px; }
 .invisible { visibility: hidden; }
 
@@ -19,6 +19,7 @@ h1 { margin: 0 0 5px 0; font-size: 20px; }
 .langs { position: absolute; right: 20px; top: -5px; z-index: 5; }
 .langs .active { color: #6C757E; }
 
+/* sidebar */
 .sidebar .author-title a,
 .sidebar .author-links a { color: #6C757E !important; }
 .sidebar .author-title { font-size: 22px; }
@@ -35,12 +36,19 @@ h1 { margin: 0 0 5px 0; font-size: 20px; }
 .sidebar .nav-group ul li.active a { padding-left: 7px; border-left: 2px solid #6C757E; color: #6C757E; line-height: 8px; }
 .sidebar .nav-group ul li.active { padding: 7px 0; }
 
+/* project */
+.project .decription { color: #515151; }
+
+/* home */
 .home-boxes img { margin-bottom: 10px; }
 .home-boxes p { font-size: 11px; }
 .home-boxes { margin-bottom: 40px; }
 
-audio { width: 100%; }
+/* gallery */
+#blueimp-gallery .title { font-size: 15px; font-weight: normal; }
 
+/* other */
+audio { width: 100%; }
 @media (max-width: 991px) {
 	.sidebar { padding-left: 10px; }
 	.sidebar .nav-group ul li a { font-size: 15px; padding: 5px 0px; }

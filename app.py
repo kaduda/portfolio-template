@@ -13,16 +13,18 @@ from utils.sidebar import Sidebar
 
 # resolves unicode string/template errors
 reload(sys)
-sys.setdefaultencoding("utf-8")
+sys.setdefaultencoding('utf-8')
 
 app = Flask(__name__)
-app.config.from_object("config")
+app.config.from_object('config')
 
 freezer = Freezer(app)
-hr_pages = FlatPages(app, name="hr")
-eng_pages = FlatPages(app, name="eng")
+hr_pages = FlatPages(app, name='hr')
+eng_pages = FlatPages(app, name='eng')
 
-bio_pages = FlatPages(app, name="bio")
+drafts_pages = FlatPages(app, name='drafts')
+
+bio_pages = FlatPages(app, name='bio')
 
 def get_other_lang(lang):
     return 'eng' if lang == 'hr' else 'hr'
@@ -57,11 +59,11 @@ def index(lang):
         sidebar=sidebar,
         pages=sorted_pages,
         lang=lang,
-        title="Katerina Duda",
+        title='Katerina Duda',
         translate_url=url_for('index', lang=get_other_lang(lang)))
 
-@app.route('/<path:path>/', defaults=dict(lang='hr'))
-@app.route('/eng/<path:path>/', defaults=dict(lang='eng'))
+@app.route('/projekti/<path:path>/', defaults=dict(lang='hr'))
+@app.route('/eng/projects/<path:path>/', defaults=dict(lang='eng'))
 def project(path, lang):
     pages = get_pages(lang)
     page = pages.get(path)
@@ -75,6 +77,22 @@ def project(path, lang):
         title=page['title'],
         lang=lang,
         translate_url=translate_url)
+
+
+@app.route('/skice', defaults=dict(lang='hr'))
+@app.route('/eng/drafts', defaults=dict(lang='eng'))
+def draft(lang):
+    sorted_drafts = sorted(drafts_pages, reverse=True,
+        key=lambda p: p.meta['date'])
+
+    pages = get_pages(lang)
+    
+    sidebar = Sidebar(pages, '', lang)
+    return render_template('drafts.html',
+        sidebar=sidebar,
+        title='Drafts' if lang == 'eng' else 'Skice',
+        lang=lang, drafts=sorted_drafts,
+        translate_url=url_for('draft', lang=get_other_lang(lang)))
 
 
 @app.route('/bio/', defaults=dict(lang='hr'))
@@ -105,7 +123,7 @@ def contact(lang):
     return render_template('contact.html',
         sidebar=sidebar,
         lang=lang,
-        title="Kontakt" if lang == "hr" else "Contact",
+        title='Kontakt' if lang == 'hr' else 'Contact',
         translate_url=translate_url)
 
 

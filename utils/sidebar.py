@@ -13,7 +13,7 @@ class Sidebar(object):
 		),
 		(
 			'collaboration', dict(
-				hr = 'ZAJEDNIČKI RADOVI',
+				hr = 'SURADNJE',
 				eng = 'COLLABORATIONS'
 			)
 		)
@@ -32,10 +32,11 @@ class Sidebar(object):
 		)
 
 		for page in sorted_pages:
-			sidebar_categories.get(page.meta.get('category')).get('projects').append({
-				'title': page.meta.get('title'),
-				'path': page.path,
-				'active': page.path == active_path
-				})
+			if not page.meta.get('hide'):
+				sidebar_categories.get(page.meta.get('category')).get('projects').append({
+					'title': page.meta.get('title'),
+					'path': page.path,
+					'active': page.path == active_path
+					})
 
 		self.sidebar_categories = sidebar_categories
