@@ -17,5 +17,5 @@ FLATPAGES_DRAFTS_EXTENSION = '.md'
 FLATPAGES_DRAFTS_ROOT = 'pages/drafts'
 
 FREEZER_BASE_URL = "http://katerinaduda.net/"
-FREEZER_DESTINATION = "..\kaduda.github.io"
+FREEZER_DESTINATION = "../kaduda.github.io"
 FREEZER_DESTINATION_IGNORE = ["*.git", "CNAME"]

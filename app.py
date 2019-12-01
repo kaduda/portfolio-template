@@ -26,11 +26,14 @@ drafts_pages = FlatPages(app, name='drafts')
 
 bio_pages = FlatPages(app, name='bio')
 
+
 def get_other_lang(lang):
     return 'eng' if lang == 'hr' else 'hr'
 
+
 def get_pages(lang, reverse=False):
     return hr_pages if lang == 'hr' else eng_pages
+
 
 def get_translate_url(page, lang):
     new_lang = get_other_lang(lang)
@@ -62,6 +65,26 @@ def index(lang):
         title='Katerina Duda',
         translate_url=url_for('index', lang=get_other_lang(lang)))
 
+
+@app.route('/radovi/<category>/', defaults=dict(lang='hr'))
+@app.route('/eng/works/<category>/', defaults=dict(lang='eng'))
+def category(lang, category):
+
+    pages = get_pages(lang)
+
+    sorted_pages = sorted(pages, reverse=True,
+            key=lambda p: p.meta['date'])
+
+    sidebar = Sidebar(pages, '', lang)
+    return render_template('category.html',
+        sidebar=sidebar,
+        pages=sorted_pages,
+        lang=lang,
+        title='Katerina Duda',
+        category=category,
+        translate_url=url_for('index', lang=get_other_lang(lang)))
+
+
 @app.route('/projekti/<path:path>/', defaults=dict(lang='hr'))
 @app.route('/eng/projects/<path:path>/', defaults=dict(lang='eng'))
 def project(path, lang):
@@ -77,22 +100,6 @@ def project(path, lang):
         title=page['title'],
         lang=lang,
         translate_url=translate_url)
-
-
-@app.route('/skice', defaults=dict(lang='hr'))
-@app.route('/eng/drafts', defaults=dict(lang='eng'))
-def draft(lang):
-    sorted_drafts = sorted(drafts_pages, reverse=True,
-        key=lambda p: p.meta['date'])
-
-    pages = get_pages(lang)
-    
-    sidebar = Sidebar(pages, '', lang)
-    return render_template('drafts.html',
-        sidebar=sidebar,
-        title='Drafts' if lang == 'eng' else 'Skice',
-        lang=lang, drafts=sorted_drafts,
-        translate_url=url_for('draft', lang=get_other_lang(lang)))
 
 
 @app.route('/bio/', defaults=dict(lang='hr'))
@@ -112,21 +119,6 @@ def bio(lang):
         translate_url=translate_url)
 
 
-@app.route('/kontakt/', defaults=dict(lang='hr'))
-@app.route('/eng/contact/', defaults=dict(lang='eng'))
-def contact(lang):
-    pages = get_pages(lang)
-
-    translate_url = url_for('contact', lang=get_other_lang(lang))
-
-    sidebar = Sidebar(pages, '', lang)
-    return render_template('contact.html',
-        sidebar=sidebar,
-        lang=lang,
-        title='Kontakt' if lang == 'hr' else 'Contact',
-        translate_url=translate_url)
-
-
 @app.route('/static/thumb/<size>/<path:filename>')
 def thumb(size, filename):
 
@@ -140,7 +132,7 @@ def thumb(size, filename):
 
     if not os.path.exists(thumb_dir):
         os.makedirs(thumb_dir)
-    
+
     outfile = os.path.join(thumb_dir, outfile[1])
     im = Image.open(infile)
     output = cropped_thumbnail(im, size)
@@ -148,12 +140,16 @@ def thumb(size, filename):
 
     return send_from_directory(*os.path.split(outfile))
 
+
 if __name__ == '__main__':
     if len(sys.argv) > 1 and sys.argv[1] == 'build':
 
         def home_urls():
             return (
                 ('index', dict(lang='hr')), ('index', dict(lang='eng')),
+                ('category', dict(category='selected', lang='hr')), ('category', dict(category='selected', lang='eng')),
+                ('category', dict(category='drafts', lang='hr')), ('category', dict(category='drafts', lang='eng')),
+
                 ('thumb', dict(size='805x463', filename='img/hvala/f-d-1.jpg')),
                 ('thumb', dict(size='805x463', filename='img/hvala/f-1.jpg')),
                 ('thumb', dict(size='805x463', filename='img/hvala/p-1.jpg')),

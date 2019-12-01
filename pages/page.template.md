@@ -1,6 +1,6 @@
 *key: migrene
 *date: 2014-03-01
-*category: selected || collaboration
+*category: selected
 *title: Dnevnik migrene
 *description: tri knjige, format a5, 2014.
 homepage: True
