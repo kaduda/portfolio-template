@@ -11,7 +11,7 @@
         </h1>
         <p class="description">{{ project.description }}</p>
 
-        {{ project.html|safe }}
+        {{ project }}
 
         {% if project.audio %}
             <audio controls class="spacer">

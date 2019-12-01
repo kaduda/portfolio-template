@@ -144,17 +144,33 @@ def thumb(size, filename):
     outfile = os.path.join(thumb_dir, outfile[1])
     im = Image.open(infile)
     output = cropped_thumbnail(im, size)
-    output.save(outfile, "JPEG")
+    output.save(outfile, 'JPEG')
 
     return send_from_directory(*os.path.split(outfile))
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1 and sys.argv[1] == "build":
+    if len(sys.argv) > 1 and sys.argv[1] == 'build':
 
         def home_urls():
             return (
-                ('index', dict(lang="hr")), ('index', dict(lang="eng"))
-                )
+                ('index', dict(lang='hr')), ('index', dict(lang='eng')),
+                ('thumb', dict(size='805x463', filename='img/hvala/f-d-1.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/f-1.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/p-1.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/p-3.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/f-d-1-1.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/f-d-3.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/d-1.jpg')),
+                ('thumb', dict(size='463x805', filename='img/hvala/k-1.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/a-a-1.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/a-a-2.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/a-1.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/f-a-2.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/o-1.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/o-2.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/o-3.jpg')),
+                ('thumb', dict(size='805x463', filename='img/hvala/o-4.jpg')),
+            )
 
         freezer.register_generator(home_urls)
         freezer.freeze()
