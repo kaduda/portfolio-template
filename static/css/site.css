@@ -40,6 +40,10 @@ h1 { margin: 0 0 5px 0; font-size: 20px; font-family: 'Roboto Mono', monospace; 
 .project > p > img { display: block; margin: 0 auto; }
 .project .description { margin-bottom: 35px; }
 
+/* bio */
+.bio-page ul li { line-height: 22px; }
+.bio-page p:not(:first-child) { margin-bottom: 8.5px; }
+
 /* home */
 .home-boxes img { margin-bottom: 10px; }
 .home-boxes p { font-size: 11px; }

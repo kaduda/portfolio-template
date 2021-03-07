@@ -11,10 +11,6 @@ from PIL import Image
 from utils.image import cropped_thumbnail
 from utils.sidebar import Sidebar
 
-# resolves unicode string/template errors
-reload(sys)
-sys.setdefaultencoding('utf-8')
-
 app = Flask(__name__)
 app.config.from_object('config')
 
@@ -166,6 +162,9 @@ if __name__ == '__main__':
                 ('thumb', dict(size='805x463', filename='img/hvala/o-2.jpg')),
                 ('thumb', dict(size='805x463', filename='img/hvala/o-3.jpg')),
                 ('thumb', dict(size='805x463', filename='img/hvala/o-4.jpg')),
+                ('thumb', dict(size='805x463', filename='img/strujanja/6.jpg')),
+                ('thumb', dict(size='805x463', filename='img/fundus/10.jpg')),
+
             )
 
         freezer.register_generator(home_urls)

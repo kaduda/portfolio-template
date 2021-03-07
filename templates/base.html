@@ -33,7 +33,7 @@
                 </div>
                 {% endwith %}
 
-                {% for group in sidebar.sidebar_categories.itervalues() %}
+                {% for group in sidebar.sidebar_categories.values() %}
                 {% with group_url=url_for('category', category=group.key, lang=lang) %}
                 <div class="nav-group {{ 'active' if request.path == group_url }}">
                     <a href="{{ group_url }}" class="nav-group-title">

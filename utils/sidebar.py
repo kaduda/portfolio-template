@@ -29,7 +29,7 @@ class Sidebar(object):
                 'key': key,
                 'projects': [],
                 'title': self.categories.get(key).get(lang)
-            }) for key in self.categories.iterkeys()
+            }) for key in self.categories.keys()
         )
         )
 
